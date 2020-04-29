@@ -5,7 +5,11 @@
   "main": "index.js",
   "scripts": {
     "start": "node src/index",
-    "dev": "env-cmd -f ./config/dev.env nodemon src/index"
+    "dev": "env-cmd -f ./config/dev.env nodemon src/index",
+    "test": "env-cmd -f ./config/test.env jest --watch --runInBand"
+  },
+  "jest": {
+    "testEnvironment": "node"
   },
   "keywords": [],
   "author": "",
@@ -24,6 +28,8 @@
   },
   "devDependencies": {
     "env-cmd": "^10.1.0",
-    "nodemon": "^2.0.3"
+    "jest": "^25.5.0",
+    "nodemon": "^2.0.3",
+    "supertest": "^4.0.2"
   }
 }
