@@ -31,6 +31,39 @@ test('Should signup a new user', async () => {
     expect(user.password).not.toBe('Pass12345')
 })
 
+test('Should not signup a new user with invalid email', async () => {
+    const response = await request(app)
+        .post('/users')
+        .send({
+            name: 'Susie',
+            email: 'susieexample.com',
+            password: 'Pass12345'
+        })
+        .expect(400)
+})
+
+test('Should not signup a new user with invalid name', async () => {
+    const response = await request(app)
+        .post('/users')
+        .send({
+            name: '',
+            email: 'susie@example.com',
+            password: 'Pass12345'
+        })
+        .expect(400)
+})
+
+test('Should not signup a new user with invalid password', async () => {
+    const response = await request(app)
+        .post('/users')
+        .send({
+            name: 'Susie',
+            email: 'susie@example.com',
+            password: 'Pa345'
+        })
+        .expect(400)
+})
+
 test('Should login existing user', async () => {
     const response = await request(app)
         .post('/users/login')
@@ -119,4 +152,13 @@ test('Should not update invalid user fields', async () => {
             location: 'HTX'
         })
         .expect(400)
+})
+
+test('Should not update unauthenticated user', async () => {
+    await request(app)
+        .patch('/users/me')
+        .send({
+            name: 'HTX'
+        })
+        .expect(401)
 })
